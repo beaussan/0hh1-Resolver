@@ -60,18 +60,21 @@ public class InduvSqare extends JPanel {
             public void mouseEntered(MouseEvent e) {
                 isOvered = true;
                 repaint();
+                getParent().getParent().repaint();
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 isOvered = false;
                 repaint();
+                getParent().getParent().repaint();
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
                 data.turnTile();
                 repaint();
+                getParent().getParent().repaint();
             }
         });
     }

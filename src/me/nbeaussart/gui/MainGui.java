@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * Created by beaussan on 21/07/15.
@@ -15,10 +17,21 @@ public class MainGui extends JFrame implements ActionListener {
     private GameData gd;
     private int currSize;
 
+    private SolvMarkers sm;
+
     public MainGui() {
         super("0hh1 Resolver !");
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                sm.getTim().stop();
+                e.getWindow().dispose();
+            }
+        });
+
         JButton jbClear = new JButton("Clear...");
         jbClear.setActionCommand("clear");
         jbClear.addActionListener(this);
@@ -58,6 +71,8 @@ public class MainGui extends JFrame implements ActionListener {
 
         gd = new GameData(4);
         gp = new GamePart(gd);
+
+        sm = new SolvMarkers(gd);
         setSizeGame(4);
         JPanel jpSouth = new JPanel(new FlowLayout());
         jpSouth.add(jbGen);
@@ -75,6 +90,7 @@ public class MainGui extends JFrame implements ActionListener {
         jpEast.add(jbSize6);
         jpEast.add(jbSize8);
         jpEast.add(jbSize10);
+        jpEast.add(sm);
         add(jpEast, BorderLayout.EAST);
         add(gp, BorderLayout.CENTER);
         setVisible(true);
@@ -118,5 +134,6 @@ public class MainGui extends JFrame implements ActionListener {
         currSize = size;
         gd.setSize(size);
         gp.setGameData(gd);
+        sm.setGameData(gd);
     }
 }

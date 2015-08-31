@@ -25,7 +25,7 @@ public class GameData {
 
     public void generate() {
         GameData copy = new GameData(this.size);
-        int nmb = (int) (size * 2 / 0.3);
+        int nmb = size * 2 / 5;
         do {
             copy.clear();
             this.clear();
@@ -38,7 +38,7 @@ public class GameData {
                 getTile(a, b).setType(t);
             }
 
-        } while (!copy.solve());
+        } while (!copy.solve() && !GameChecker.isValidGame(copy));
 
     }
 
@@ -63,10 +63,6 @@ public class GameData {
         return array[y][x];
     }
 
-    public boolean isCurrValid() {
-        return false;
-        //TODO validation of game not final state
-    }
 
     public boolean isValid(int x, int y) {
         return 0 <= x && x < size && 0 <= y && y < size;
